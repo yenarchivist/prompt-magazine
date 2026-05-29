@@ -48,6 +48,8 @@ function buildRemix(seed) {
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
+  const [meta, setMeta] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState("");
   const [activeTag, setActiveTag] = useState("all");
   const [selected, setSelected] = useState(null);
@@ -55,10 +57,18 @@ export default function Home() {
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    fetch("/data/prompts.json")
+    setLoading(true);
+    fetch("/api/reactor")
       .then((res) => res.json())
-      .then((data) => setPosts(data.posts || []))
-      .catch(() => setPosts([]));
+      .then((data) => {
+        setPosts(data.posts || []);
+        setMeta(data.meta || null);
+      })
+      .catch(() => {
+        setPosts([]);
+        setMeta(null);
+      })
+      .finally(() => setLoading(false));
   }, []);
 
   const allTags = useMemo(() => {
@@ -100,12 +110,13 @@ export default function Home() {
           <p className="eyebrow">YENA PROMPT MAGAZINE</p>
           <h1>프롬프트를 저장하고, 분석하고, 예나 스타일로 다시 만드는 공간</h1>
           <p className="heroText">
-            Reactor 같은 프롬프트 매거진 구조를 참고해서 만든 첫 번째 실험실. 지금은 JSON 기반이고, 나중에 DB와 AI 분석기를 붙이면 돼.
+            Reactor Prompt 데이터를 실시간으로 읽어오고, 프롬프트가 있는 게시물만 보여주는 실험실. 이미지는 외부 URL로 연결해서 용량 부담을 줄였어.
           </p>
         </div>
         <div className="heroCard">
-          <span>{posts.length}</span>
-          <p>archived prompts</p>
+          <span>{loading ? "..." : posts.length}</span>
+          <p>prompt archives</p>
+          {meta && <small>{meta.totalSourcePosts} posts · {meta.skippedWithoutPrompt} skipped</small>}
         </div>
       </section>
 
@@ -113,7 +124,7 @@ export default function Home() {
         <input
           value={query}
           onChange={(event) => setQuery(event.target.value)}
-          placeholder="검색: cinematic, hotel, robot, yenarity..."
+          placeholder="검색: cinematic, hotel, robot, kimono, food..."
         />
         <div className="tags">
           {allTags.map((tag) => (
@@ -128,26 +139,30 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="grid">
-        {filtered.map((post) => (
-          <article key={post.id} className="card" onClick={() => openPost(post)}>
-            <div className="thumb">
-              {post.thumbnail ? <img src={post.thumbnail} alt={post.title} /> : <div className="emptyThumb">No image</div>}
-            </div>
-            <div className="cardBody">
-              <div className="metaRow">
-                <span>{post.source || "archive"}</span>
-                <span>{post.date}</span>
+      {loading ? (
+        <div className="loadingBox">Reactor 데이터를 불러오는 중...</div>
+      ) : (
+        <section className="grid">
+          {filtered.map((post) => (
+            <article key={post.id} className="card" onClick={() => openPost(post)}>
+              <div className="thumb">
+                {post.thumbnail ? <img src={post.thumbnail} alt={post.title} /> : <div className="emptyThumb">No image</div>}
               </div>
-              <h2>{post.title}</h2>
-              <p>{post.caption}</p>
-              <div className="cardTags">
-                {(post.tags || []).slice(0, 5).map((tag) => <span key={tag}>#{tag}</span>)}
+              <div className="cardBody">
+                <div className="metaRow">
+                  <span>{post.source || "archive"}</span>
+                  <span>{post.date}</span>
+                </div>
+                <h2>{post.title}</h2>
+                <p>{post.caption}</p>
+                <div className="cardTags">
+                  {(post.tags || []).slice(0, 5).map((tag) => <span key={tag}>#{tag}</span>)}
+                </div>
               </div>
-            </div>
-          </article>
-        ))}
-      </section>
+            </article>
+          ))}
+        </section>
+      )}
 
       {selected && (
         <div className="modalOverlay" onClick={(event) => event.target === event.currentTarget && setSelected(null)}>
