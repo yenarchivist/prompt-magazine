@@ -1,0 +1,30 @@
+{
+  "posts": [
+    {
+      "id": "reactor-1497",
+      "title": "Sci-fi SUV Transform Sequence",
+      "caption": "Reactor reference sample. Futuristic vehicle transformation video prompt.",
+      "images": [
+        "https://reactorprompt.vercel.app/gallery-images/threads_DYw4yqKmtq6_0.jpg"
+      ],
+      "thumbnail": "https://reactorprompt.vercel.app/gallery-images/threads_DYw4yqKmtq6_0.jpg",
+      "prompt": "Cinematic photoreal sci-fi action sequence on a sunny Los Angeles freeway. A white-and-orange futuristic armored SUV speeds through traffic under I-110 and I-105 freeway signs. It violently transforms mid-drive into a massive humanoid robot, panels splitting, wheels folding, mechanical limbs expanding, debris and dust exploding from cracked asphalt. The robot stomps through traffic, reveals a heavy rotating arm cannon in an extreme close-up, then fires with a huge muzzle flash. It immediately transforms again into a sleek white-and-orange fighter jet, twin engines igniting, launching upward over the Los Angeles skyline and firing a missile into the blue sky. Damaged freeway, dust clouds, broken pavement, realistic traffic, palm trees, Hollywood blockbuster VFX, dynamic camera, high-speed motion blur, realistic daylight, ultra-detailed mechanical design, continuous visual continuity.",
+      "tags": ["sci-fi", "vehicle", "robot", "action", "video"],
+      "source": "Reactor Prompt",
+      "threadsUrl": "https://www.threads.com/@reactor_art/post/DYw4yqKmtq6",
+      "date": "2026-05-25"
+    },
+    {
+      "id": "yena-sample-001",
+      "title": "Yenarity Hotel Mood Starter",
+      "caption": "예나리티 스타일을 테스트하기 위한 샘플 프롬프트.",
+      "images": [],
+      "thumbnail": "",
+      "prompt": "A refined Korean virtual lifestyle model with a short bob haircut in a quiet luxury hotel lobby, soft warm daylight, clean beige palette, editorial travel magazine mood, subtle confidence, modern cafe and boutique hotel aesthetic, realistic texture, elegant composition.",
+      "tags": ["yenarity", "hotel", "travel", "editorial", "portrait"],
+      "source": "Yena",
+      "threadsUrl": "",
+      "date": "2026-05-29"
+    }
+  ]
+}
