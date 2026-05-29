@@ -7,6 +7,9 @@
   --accent: #9a6a45;
   --accent-dark: #6f482d;
   --shadow: 0 24px 60px rgba(62, 44, 31, 0.16);
+  --font-serif: Georgia, "Times New Roman", "Noto Serif KR", serif;
+  --font-sans: Inter, Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --font-mono: "SFMono-Regular", "Cascadia Code", "Consolas", monospace;
 }
 
 * { box-sizing: border-box; }
@@ -14,7 +17,7 @@ html { background: var(--bg); }
 body {
   margin: 0;
   color: var(--ink);
-  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: var(--font-sans);
   background:
     radial-gradient(circle at top left, rgba(197, 143, 92, 0.22), transparent 32rem),
     radial-gradient(circle at bottom right, rgba(90, 60, 40, 0.12), transparent 30rem),
@@ -44,10 +47,12 @@ main {
   letter-spacing: 0.18em;
   font-size: 12px;
   font-weight: 800;
+  text-transform: uppercase;
 }
 
 .hero h1 {
   margin: 0;
+  font-family: var(--font-serif);
   font-size: clamp(38px, 7vw, 86px);
   line-height: 0.94;
   letter-spacing: -0.07em;
@@ -73,12 +78,14 @@ main {
   justify-content: flex-end;
 }
 .heroCard span {
+  font-family: var(--font-serif);
   font-size: 74px;
   line-height: 1;
   font-weight: 900;
   letter-spacing: -0.08em;
 }
 .heroCard p { margin: 8px 0 0; color: var(--muted); }
+.heroCard small { margin-top: 8px; color: var(--muted); line-height: 1.4; }
 
 .controls {
   position: sticky;
@@ -121,6 +128,15 @@ main {
   border-color: var(--ink);
 }
 
+.loadingBox {
+  margin-top: 30px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,0.62);
+  border-radius: 24px;
+  padding: 28px;
+  color: var(--muted);
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -147,8 +163,16 @@ main {
   object-fit: cover;
   display: block;
 }
-.emptyThumb, .emptyLarge {
-  width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: var(--muted);
+.emptyThumb, .emptyLarge, .imageFallback {
+  width: 100%;
+  height: 100%;
+  min-height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  text-align: center;
+  padding: 18px;
   background: repeating-linear-gradient(-45deg, rgba(25,21,18,0.05), rgba(25,21,18,0.05) 10px, rgba(255,255,255,0.24) 10px, rgba(255,255,255,0.24) 20px);
 }
 .cardBody { padding: 18px; }
@@ -162,9 +186,10 @@ main {
 }
 .card h2 {
   margin: 0 0 8px;
-  font-size: 20px;
-  line-height: 1.2;
-  letter-spacing: -0.04em;
+  font-family: var(--font-serif);
+  font-size: 24px;
+  line-height: 1.08;
+  letter-spacing: -0.05em;
 }
 .card p {
   margin: 0 0 14px;
@@ -224,7 +249,8 @@ main {
 }
 .modalBody h2 {
   margin: 0 0 10px;
-  font-size: clamp(30px, 4vw, 58px);
+  font-family: var(--font-serif);
+  font-size: clamp(34px, 4.4vw, 64px);
   line-height: 0.98;
   letter-spacing: -0.07em;
 }
@@ -245,6 +271,8 @@ main {
   border-radius: 20px;
   padding: 16px;
   color: #2b211b;
+  font-family: var(--font-mono);
+  font-size: 13px;
 }
 .remix { background: #1f1915; color: #fff7ec; }
 .actions { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
