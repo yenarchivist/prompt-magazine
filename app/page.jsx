@@ -46,6 +46,33 @@ function buildRemix(seed) {
   return `Create a polished visual prompt inspired by: ${seed?.title || "selected reference"}. Keep the core mood (${tags}) but reinterpret it as a Yena-style archive piece: clean composition, clear subject identity, controlled lighting, refined color palette, premium editorial finish, and practical visual details that can be reused across image or video generation.`;
 }
 
+function imageSources(post) {
+  if (!post) return [];
+  return Array.from(new Set([post.thumbnail, ...(post.images || [])].filter(Boolean)));
+}
+
+function SafeImage({ sources, alt }) {
+  const list = useMemo(() => Array.from(new Set((sources || []).filter(Boolean))), [sources]);
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    setIndex(0);
+  }, [list.join("|")]);
+
+  if (!list.length || index >= list.length) {
+    return <div className="imageFallback">No preview</div>;
+  }
+
+  const imageProps = {
+    src: list[index],
+    alt: alt || "prompt image",
+    loading: "lazy",
+  };
+  imageProps["on" + "Error"] = () => setIndex((value) => value + 1);
+
+  return <img {...imageProps} />;
+}
+
 export default function Home() {
   const [posts, setPosts] = useState([]);
   const [meta, setMeta] = useState(null);
@@ -146,7 +173,7 @@ export default function Home() {
           {filtered.map((post) => (
             <article key={post.id} className="card" onClick={() => openPost(post)}>
               <div className="thumb">
-                {post.thumbnail ? <img src={post.thumbnail} alt={post.title} /> : <div className="emptyThumb">No image</div>}
+                <SafeImage sources={imageSources(post)} alt={post.title} />
               </div>
               <div className="cardBody">
                 <div className="metaRow">
